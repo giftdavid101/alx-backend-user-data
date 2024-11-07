@@ -3,6 +3,7 @@
 """ function returns the log message obfuscated"""
 
 
+import os
 import re
 from typing import List, Tuple
 import logging
@@ -55,3 +56,15 @@ def get_logger() -> logging.Logger:
     logger.propagate = False
     logger.addHandler(handler)
     return logger
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Connects to a mysql database
+    """
+    connector = mysql.connector.connect(
+        host=os.getenv('PERSONAL_DATA_DB_HOST'),
+        database=os.getenv('PERSONAL_DATA_DB_NAME'),
+        user=os.getenv('PERSONAL_DATA_DB_USERNAME'),
+        password=os.getenv('PERSONAL_DATA_DB_PASSWORD')
+    )
+    return connector
