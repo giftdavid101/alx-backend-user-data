@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-""" """
+
+""" function returns the log message obfuscated"""
 
 import re
 from typing import List, Tuple
