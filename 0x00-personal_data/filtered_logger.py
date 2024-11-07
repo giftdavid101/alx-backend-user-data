@@ -2,9 +2,11 @@
 
 """ function returns the log message obfuscated"""
 
+
 import re
 from typing import List, Tuple
 import logging
+
 
 PII_FIELDS: Tuple[str] = ('name', 'email', 'phone', 'ssn', 'password')
 
