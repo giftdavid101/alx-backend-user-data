@@ -4,6 +4,7 @@
 
 import re
 from typing import List, Tuple
+import logging
 
 PII_FIELDS: Tuple[str] = ('name', 'email', 'phone', 'ssn', 'password')
 
@@ -40,4 +41,15 @@ class RedactingFormatter(logging.Formatter):
         """
         log = super(RedactingFormatter, self).format(record=record)
         return filter_datum(self.fields, self.REDACTION, log, self.SEPARATOR)
-
+    
+def get_logger() -> logging.Logger:
+    """
+    Creates and configures a logger
+    """
+    logger = logging.getLogger('user_data')
+    handler = logging.StreamHandler()
+    handler.setFormatter(RedactingFormatter(fields=PII_FIELDS))
+    logger.setLevel(logging.INFO)
+    logger.propagate = False
+    logger.addHandler(handler)
+    return logger
