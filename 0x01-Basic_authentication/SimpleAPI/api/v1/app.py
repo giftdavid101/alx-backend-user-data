@@ -30,7 +30,7 @@ def filter_request():
     if auth is None:
         return
 
-    excluded_paths = [ '/api/v1/unauthorized/' ]
+    excluded_paths = [ '/api/v1/unauthorized/','/api/v1/forbidden/' ]
     if not auth.require_auth(request.path, excluded_paths):
         return
 
@@ -46,6 +46,13 @@ def unauthorized_request(error) -> str:
     return jsonify({
         "error": "Unauthorized"
     }), 401
+
+
+@app.errorhandler(403)
+def unauthorized(error) -> str:
+    """ Forbidden error handler
+    """
+    return jsonify({"error": "Forbidden"}), 403
 
 
 @app.errorhandler(404)
